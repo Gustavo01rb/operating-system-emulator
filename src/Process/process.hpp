@@ -22,6 +22,8 @@ class Process{
         int          priority;
         std::string  status;
         std::string  type;
+        int          penalty_time;
+
 
     public:
         Process(int id):id(id){}
@@ -34,13 +36,17 @@ class Process{
             std::string type);
 
     public:
-        int         get_id()          const;
-        int         get_cycles()      const;
-        short int   get_max_quantum() const;
-        int         get_timestamp()   const;
-        int         get_priority()    const;
-        std::string get_status()      const;
-        std::string get_type()        const;        
+        void set_penalty_time(int penalty_time);
+
+    public:
+        int         get_id()           const;
+        int         get_cycles()       const;
+        int         get_penalty_time() const;
+        short int   get_max_quantum()  const;
+        int         get_timestamp()    const;
+        int         get_priority()     const;
+        std::string get_status()       const;
+        std::string get_type()         const;        
 
     public:
         void add_timestamp();
