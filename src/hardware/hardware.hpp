@@ -8,13 +8,14 @@ class Hadware{
         virtual void remove_process(int id) = 0;
         virtual void generate_report() const = 0;
         
+        
         struct ContentData{
             int         id;                // ID do processo
             int         time;              // Tempo máximo de castigo
             int         current_time;      // Tempo que ele está na memoria
             bool        alocated;          // variável que define se está alocado ou não 
             std::string description;       // Tipo do processo 
-            ContentData(){}
+            ContentData(){this->alocated = false;}
             ContentData(int id, int time, int current_time, std::string description):
                 id(id),
                 time(time),

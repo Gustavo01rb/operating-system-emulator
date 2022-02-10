@@ -3,14 +3,14 @@
 #include <pthread.h>
 
 #include "shell/shell.hpp"
-#include "hardware/memory/memory.hpp"
+#include "hardware/storage/storage.hpp"
 
 using namespace std;
 
 int main(){
     system("clear");
     //Shell* shell_ref = new Shell();
-    Memory teste = Memory(5);
+    Storage teste = Storage(5);
     //teste.generate_report();
     Process processo(20, 30, 15, 20, 5, "Bonito");
 

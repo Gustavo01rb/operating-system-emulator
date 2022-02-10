@@ -22,6 +22,10 @@ void Memory::insert_process (Process process){
 }
 
 void Memory::remove_process (int id){
+    if(this->allocated_segments == 0){ 
+        std::cout<<"Erro [0111] -> O contúdo não pôde ser removido pois não existe, ou não está alocado" << std::endl;
+        return;
+    }
     int position = hashing_function(id, this->segments);
     
     if(ram[position].alocated == false){ 
