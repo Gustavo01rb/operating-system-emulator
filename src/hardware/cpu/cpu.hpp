@@ -10,6 +10,7 @@ class Cpu: public Hadware{
         std::vector<Process> cores;
         Process history_process;
     public:
+        Cpu(){}
         Cpu(int cores);
         void insert_process (Process process) override;
         void remove_process (int id)          override;

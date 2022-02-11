@@ -26,6 +26,7 @@ class Process{
 
 
     public:
+        Process(){}
         Process(int id):id(id){}
         Process( 
             int id, 

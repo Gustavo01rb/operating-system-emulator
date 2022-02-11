@@ -1,51 +1,86 @@
 #include "shell.hpp"
 #include <pthread.h>
+#include <unistd.h>
 
+void  create_thread(pthread_t *__restrict__ __newthread, const pthread_attr_t *__restrict__ __attr, void *(*__start_routine)(void *), void *__restrict__ __arg){
+    if((pthread_create(__newthread, __attr, __start_routine, __arg) != 0)){
+        printf("Erro ao criar a thread.");
+        exit(EXIT_FAILURE);
+    }
+}
+void* thread_shell(void* shell){
+    Shell* assist = (Shell*) shell;
+    while(assist->get_selected_option() != -2){ assist->select_option();  usleep(250000)  ; } 
+    pthread_exit(NULL);
+}
 
-std::string selected_option;
-bool ignore = true;
+void Shell::select_option(){
+    std::string str;
+    std::cout<<"\n $ ";
+    std::cin >> str;
 
-void* select_option( void* t ){
-    std::cin >> selected_option;
-    ignore = false;
-    pthread_exit(t);
+    if     (str == "help"       || str == "0" ) this->selected_option = 0;  
+    else if(str == "meminfo"    || str == "1" ) this->selected_option = 1; 
+    else if(str == "diskinfo"   || str == "2" ) this->selected_option = 2; 
+    else if(str == "cpuinfo"    || str == "3" ) this->selected_option = 3; 
+    else if(str == "load"       || str == "4" ) this->selected_option = 4; 
+    else if(str == "queueschell"|| str == "5" ) this->selected_option = 5; 
+    else if(str == "execute"    || str == "6" ) this->selected_option = 6;  
+    else if(str == "kill -9"    || str == "7" ) this->selected_option = 7;  
+    else if(str == "exit"                     ) this->selected_option = -2;
+    
+    this->ignore = false;    
+    if(str == "x") this->ignore = true;
 }
 
 void Shell::start_os(){
     pthread_t thread_shell_option; 
-
-    if((pthread_create(&thread_shell_option, NULL, select_option, NULL) != 0)){
-        printf("Erro ao criar a thread.");
-        exit(EXIT_FAILURE);
-    }
-    
-    do{
-        if(ignore) continue;
-
-        if(selected_option == "help" || selected_option == "0" ){
-            this->help_command();
-            ignore = true;
-        }   
+    create_thread(&thread_shell_option, NULL, thread_shell, this);
+    while(this->selected_option  != -2){
+        if(this->ignore) continue;
+            switch( this->selected_option ){
+                case 0:                                                                      // 0-> help 
+                    this->help_command();       
+                    this->ignore = true;  
+                break; 
+                case 1:                                                                      // 1-> meminfo 
+                    this->kernel_ref->get_memory_ref()->generate_report();
+                    this->message_exit();
+                break; 
+                case 2:                                                                      // 2-> meminfo 
+                    this->kernel_ref->get_storage_ref()->generate_report();    
+                    this->message_exit();             
+                break; 
+                case 3:                                                                      // 3-> cpuinfo 
+                    this->kernel_ref->get_cpu_ref()->generate_report();        
+                    this->message_exit();             
+                break; 
+                /*case 4:                                                                      // 4-> Load 
+                    scheduler->load(); 
+                    shell->set_execute_status(false);  
+                break; 
+                case 5:                                                                      // 5-> queueschell 
+                    scheduler->report();
+                    shell->message_exit();
+                break; 
+                case 6:                                                                      // 6-> execute 
+                    create_thread(&thread_execute_process, NULL, execute, scheduler); 
+                    shell->set_execute_status(false);
+                break; 
+                case 7:                                                                      // 7-> kill -9 
+                    scheduler->restart();
+                    shell->set_execute_status(false);   
+                break; 
+                case 8:                                                                      // 8-> Exit 
+                    cout<<"\n -Saindo...\n"; 
+                    shell->set_execute_status(false);      
+                break;    */         
+                
+                default: 
+                    std::cout<<"\n -[ERRO 00] -> O comando informado nao existe.\nTente o comando 'help' para obter ajuda. \n"<< std::endl;
+                    this->ignore = true; 
+            }
+            usleep( 500000 );
         
-        else if(selected_option == "meminfo"    || selected_option == "1" ){}  
-        
-        else if(selected_option == "diskinfo"   || selected_option == "2" ){}  
-        
-        else if(selected_option == "cpuinfo"    || selected_option == "3" ){}  
-        
-        else if(selected_option == "load"       || selected_option == "4" ){}  
-        
-        else if(selected_option == "queueschell"|| selected_option == "5" ){}  
-        
-        else if(selected_option == "execute"    || selected_option == "6" ){}   
-        
-        else if(selected_option == "kill -9"    || selected_option == "7" ){}   
-        
-        else if(selected_option == "exit"                                 ){} ;
-
-
-    }while(selected_option != "8");
-
-
-
+    } 
 }

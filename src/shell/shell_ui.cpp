@@ -11,3 +11,6 @@ void Shell::help_command(){
     std::cout << "\x1b[1;92m \n\tkill -9\t\t \x1b[0m\x1b[3m Finaliza a execucao do sistema operacional, voltando o mesmo para o \n\t\t\t estado inicial, em que os processos estariam ainda em fase de criacao inicial.\n \x1b[0m" << std::endl;
     std::cout << "\x1b[1;92m \n\texit\t\t \x1b[0m\x1b[3m Finaliza a execução do  programa como um todo.\n \x1b[0m" << std::endl;
 }
+void Shell::message_exit(){
+    std::cout<<"\n\n\t Precione 'x + Enter' para voltar ao shell." << std::endl;
+}

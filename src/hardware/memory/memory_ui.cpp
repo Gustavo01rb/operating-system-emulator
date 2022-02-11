@@ -1,7 +1,6 @@
 #include "memory.hpp"
 
 void Memory::header_report()const{
-    //system("clear");
     std::cout<<"\n\n  |-------------------------------------------------------------------------------------------------------------|"<<std::endl;
     std::cout<<"  |\t\t\t\t\t\tInformações da Memória\t\t\t\t\t\t|"<<std::endl;
     std::cout<<"  |-------------------------------------------------------------------------------------------------------------|"<<std::endl;
@@ -17,6 +16,7 @@ void print_line_memory(Hadware::ContentData data, int segment){
 }
 
 void Memory::generate_report() const {
+    system("clear");
     this->header_report();
     this->print_list();
 

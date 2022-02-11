@@ -9,6 +9,7 @@ class Memory :public Hadware{
         ContentData* ram;        // Representação dos segmentos
     
     public:
+        Memory(){}
         Memory(int segments);
         void insert_process (Process process) override;
         void remove_process (int id)          override;

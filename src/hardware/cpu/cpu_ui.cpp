@@ -1,7 +1,6 @@
 #include "cpu.hpp"
 
 void Cpu::header_report()const{
-    //system("clear");
     std::cout<<"\n\n  |-------------------------------------------------------------------------------------|"<<std::endl;
     std::cout<<"  |\t\t\t\t    Informações da CPU    \t\t\t\t|"<<std::endl;
     std::cout<<"  |-------------------------------------------------------------------------------------|"<<std::endl;
@@ -16,6 +15,7 @@ void print_line(Process process, int core){
 }
 
 void Cpu::generate_report() const {
+    system("clear");
     this->header_report();
     this->print_list();
 

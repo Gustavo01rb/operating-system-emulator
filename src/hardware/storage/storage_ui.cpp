@@ -1,7 +1,6 @@
 #include "storage.hpp"
 
 void Storage::header_report()const{
-    //system("clear");
     std::cout<<"\n\n  |-------------------------------------------------------------------------------------------------------------|"<<std::endl;
     std::cout<<"  |\t\t\t\t\t\tInformações do Disco\t\t\t\t\t\t|"<<std::endl;
     std::cout<<"  |-------------------------------------------------------------------------------------------------------------|"<<std::endl;
@@ -17,6 +16,7 @@ void print_line_storage(Hadware::ContentData data, int segment){
 }
 
 void Storage::generate_report() const {
+    system("clear");
     this->header_report();
     this->print_list();
 

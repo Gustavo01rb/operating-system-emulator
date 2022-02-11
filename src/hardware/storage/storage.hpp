@@ -10,6 +10,7 @@ class Storage :public Hadware{
         std::list<ContentData> blocks; // Representação dos segmentos
     
     public:
+        Storage(){}
         Storage(int blocks_size);
         void insert_process (Process process) override;
         void remove_process (int id)          override;
