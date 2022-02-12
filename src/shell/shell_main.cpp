@@ -33,7 +33,14 @@ void Shell::select_option(){
     if(str == "x") this->ignore = true;
 }
 
+void Shell::init_ref(){
+    this->cpu_ref = this->kernel_ref->get_cpu_ref();
+    this->memory_ref = this->kernel_ref->get_memory_ref();
+    this->storage_ref = this->kernel_ref->get_storage_ref();
+}
+
 void Shell::start_os(){
+    this->init_ref();
     pthread_t thread_shell_option; 
     create_thread(&thread_shell_option, NULL, thread_shell, this);
     while(this->selected_option  != -2){
@@ -44,15 +51,15 @@ void Shell::start_os(){
                     this->ignore = true;  
                 break; 
                 case 1:                                                                      // 1-> meminfo 
-                    this->kernel_ref->get_memory_ref()->generate_report();
+                    this->kernel_ref->report_component(*memory_ref);
                     this->message_exit();
                 break; 
                 case 2:                                                                      // 2-> meminfo 
-                    this->kernel_ref->get_storage_ref()->generate_report();    
+                    this->kernel_ref->report_component(*storage_ref);    
                     this->message_exit();             
                 break; 
                 case 3:                                                                      // 3-> cpuinfo 
-                    this->kernel_ref->get_cpu_ref()->generate_report();        
+                    this->kernel_ref->report_component(*cpu_ref);        
                     this->message_exit();             
                 break; 
                 /*case 4:                                                                      // 4-> Load 

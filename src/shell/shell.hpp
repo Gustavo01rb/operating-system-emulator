@@ -10,6 +10,9 @@ class Shell{
         Kernel* kernel_ref;
         bool    ignore = true;
         int     selected_option = -5;
+        Cpu*    cpu_ref;
+        Memory* memory_ref;
+        Storage* storage_ref;
 
     public:
         Shell(Kernel* kernel_ref):kernel_ref(kernel_ref){}
@@ -20,6 +23,7 @@ class Shell{
     private:        
         void help_command();   // Função que especifica os comandos disponíveis
         void message_exit();
+        void init_ref();
 
 
 

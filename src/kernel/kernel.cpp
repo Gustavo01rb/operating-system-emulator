@@ -11,3 +11,5 @@ Kernel::Kernel(){
 Cpu*      Kernel::get_cpu_ref()     { return &this->cpu;     }
 Memory*   Kernel::get_memory_ref()  { return &this->memory;  }
 Storage*  Kernel::get_storage_ref() { return &this->storage; }
+
+void Kernel::report_component(const Hadware& component)const{ component.generate_report();  }

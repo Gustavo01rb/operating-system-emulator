@@ -21,5 +21,7 @@ class Kernel{
         Memory*  get_memory_ref();
         Storage* get_storage_ref();
 
+        void report_component( const Hadware& component) const;
+
 
 };
