@@ -4,7 +4,6 @@ int Scheduler::radom_number(int max) const{return rand()%max + 1;}
 
 void Scheduler::insert_process_block_list(std::list<Process>::iterator iterator){
     this->block.push_back(*iterator);
-    this->super_low_priority_process.erase(iterator);
 
 }
 
@@ -24,6 +23,6 @@ void Scheduler::execute_process(std::list<Process>::iterator& iterator){
     if(iterator->get_type() == PROCESS_MEM) this->memory_ref->insert_process(*iterator);
     else this->storage_ref->insert_process(*iterator);
     
-    this->insert_process_block_list(iterator--);
+    this->insert_process_block_list(iterator);
 
 }
