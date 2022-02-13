@@ -9,6 +9,12 @@
 #define STATUS_BLOCK    "Bloqueado"
 #define STATUS_FINISHED "Finalizado"
 
+#define PROCESS_CPU "cpu-bound"
+#define PROCESS_MEM "memory-bound"
+#define PROCESS_STG "io-bound"
+
+
+
 class Process{
     public:
         std::vector<int> tokens;
@@ -38,6 +44,11 @@ class Process{
 
     public:
         void set_penalty_time(int penalty_time);
+        void set_status_ready();
+        void set_status_await();
+        void set_status_block();
+        void set_status_finished();
+
 
     public:
         int         get_id()           const;

@@ -13,6 +13,11 @@ void* thread_shell(void* shell){
     while(assist->get_selected_option() != -2){ assist->select_option();  usleep(250000)  ; } 
     pthread_exit(NULL);
 }
+void*  execute(void* scheduler){
+    Scheduler* assist = (Scheduler*) scheduler;
+    assist->execute_list_processes();
+    pthread_exit(NULL);
+}
 
 void Shell::select_option(){
     std::string str;
@@ -42,7 +47,10 @@ void Shell::init_ref(){
 void Shell::start_os(){
     this->init_ref();
     pthread_t thread_shell_option; 
+    pthread_t thread_execute_process; 
+
     create_thread(&thread_shell_option, NULL, thread_shell, this);
+
     while(this->selected_option  != -2){
         if(this->ignore) continue;
             switch( this->selected_option ){
@@ -63,7 +71,7 @@ void Shell::start_os(){
                     this->message_exit();             
                 break; 
                 case 4:                                                                      // 4-> Load 
-                    this->scheduler_ref->load_list_processes(true); 
+                    this->scheduler_ref->load_list_processes(); 
                     this->ignore = true;  
   
                 break; 
@@ -73,11 +81,11 @@ void Shell::start_os(){
                     else              
                         this->ignore = true;  
                 break; 
-                /*case 6:                                                                      // 6-> execute 
-                    create_thread(&thread_execute_process, NULL, execute, scheduler); 
-                    shell->set_execute_status(false);
+                case 6:                                                                      // 6-> execute 
+                    create_thread(&thread_execute_process, NULL, execute, scheduler_ref); 
+                    this->ignore = true;  
                 break; 
-                case 7:                                                                      // 7-> kill -9 
+                /*case 7:                                                                      // 7-> kill -9 
                     scheduler->restart();
                     shell->set_execute_status(false);   
                 break; 

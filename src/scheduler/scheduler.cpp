@@ -1,9 +1,10 @@
 #include "scheduler.hpp"
 
-Scheduler::Scheduler(Kernel* kernel_ref):kernel_ref(kernel_ref){
+Scheduler::Scheduler(Kernel* kernel_ref, bool single_list):kernel_ref(kernel_ref), single_list(single_list){
     this->cpu_ref     = kernel_ref->get_cpu_ref();
     this->memory_ref  = kernel_ref->get_memory_ref();
     this->storage_ref = kernel_ref->get_storage_ref();
+
 }
 
 void add_process_in_list(std::list<Process>& list, nlohmann::json json_file, int position){
@@ -19,7 +20,7 @@ void add_process_in_list(std::list<Process>& list, nlohmann::json json_file, int
     );
 }
 
-void Scheduler::load_list_processes(bool use_single_list){
+void Scheduler::load_list_processes(){
     nlohmann::json json_file;
     std::ifstream file;
     file.open(PROCESSES_FILE);
@@ -37,7 +38,7 @@ void Scheduler::load_list_processes(bool use_single_list){
     } 
 
     for(int i = 0; i < (int) json_file[LIST_NAME].size(); i++ ){
-        if(use_single_list){
+        if(this->single_list){
             add_process_in_list(this->super_low_priority_process, json_file, i); 
             continue;
         }        

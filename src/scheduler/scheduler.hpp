@@ -32,12 +32,18 @@ class Scheduler{
 
         std::list<Process> block;
         std::list<Process> finalized;
-
+        bool single_list;
 
     public:
-        Scheduler(Kernel* kernel_ref);
-        void load_list_processes(bool use_single_row);
+        Scheduler(Kernel* kernel_ref, bool single_list);
+        void load_list_processes();
+        virtual void execute_list_processes() = 0;
         bool report_processes() const;
-
+    
+    protected:
+        int radom_number(int max) const;
+        void execute_process(std::list<Process>::iterator& iterator);
+        void insert_process_block_list(std::list<Process>::iterator iterator);
+    
 };
 

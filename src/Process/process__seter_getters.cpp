@@ -7,6 +7,14 @@ void Process::set_penalty_time(int penalty_time){
     }
     this->penalty_time = penalty_time;
 }
+void Process::set_status_ready()    {this->status = (std::string) STATUS_READY;    } 
+void Process::set_status_await()    {this->status = (std::string) STATUS_AWAIT;    } 
+void Process::set_status_block()    {this->status = (std::string) STATUS_BLOCK;    } 
+void Process::set_status_finished() {this->status = (std::string) STATUS_FINISHED; }    
+
+
+
+
 
 int         Process::get_id()          const{ return this->id;          }
 int         Process::get_cycles()      const{ return this->cycles;      }

@@ -44,7 +44,7 @@ bool Scheduler::report_processes() const{
     }
     if(!this->finalized.empty()){
         std::cout<<"\n"<<std::endl;
-        header((std::string) "Processos Finalizados" , true);
+        header((std::string) "Processos Finalizados" , false);
         print_list(this->block);
         std::cout<<"   ------------------------------------------------------------------------------------------------------------------------------"<<std::endl;
     }
