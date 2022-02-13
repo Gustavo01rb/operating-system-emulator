@@ -7,7 +7,7 @@
 #include "../hardware/memory/memory.hpp"
 #include "../../lib/json.hpp"
 
-#define FileName "hardware.json"
+#define FILENAME "hardware.json"
 
 class Kernel{
     private:

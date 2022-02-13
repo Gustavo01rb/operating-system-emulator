@@ -2,7 +2,13 @@
 
 Kernel::Kernel(){
     nlohmann::json hardware_info;
-    std::ifstream(FileName) >> hardware_info;
+    std::ifstream file;
+    file.open(FILENAME);
+    if(file.fail()){
+        std::cout<<"Erro [00] -> Não iniciar o sistema devido a falta do arquivo: " << FILENAME << ". \n \tVerifique se ele existe e se está correto." << std::endl;
+        exit(1);
+    } 
+    file >> hardware_info;
     this->cpu    = Cpu     ( hardware_info["cores"]    );
     this->memory = Memory  ( hardware_info["segments"] );
     this->storage = Storage( hardware_info["storage"]);

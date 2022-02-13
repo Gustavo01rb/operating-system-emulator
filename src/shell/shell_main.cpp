@@ -62,15 +62,18 @@ void Shell::start_os(){
                     this->kernel_ref->report_component(*cpu_ref);        
                     this->message_exit();             
                 break; 
-                /*case 4:                                                                      // 4-> Load 
-                    scheduler->load(); 
-                    shell->set_execute_status(false);  
+                case 4:                                                                      // 4-> Load 
+                    this->scheduler_ref->load_list_processes(true); 
+                    this->ignore = true;  
+  
                 break; 
                 case 5:                                                                      // 5-> queueschell 
-                    scheduler->report();
-                    shell->message_exit();
+                    if(this->scheduler_ref->report_processes())
+                        this->message_exit();
+                    else              
+                        this->ignore = true;  
                 break; 
-                case 6:                                                                      // 6-> execute 
+                /*case 6:                                                                      // 6-> execute 
                     create_thread(&thread_execute_process, NULL, execute, scheduler); 
                     shell->set_execute_status(false);
                 break; 
