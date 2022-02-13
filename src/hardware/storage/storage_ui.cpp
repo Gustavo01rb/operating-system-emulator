@@ -12,7 +12,7 @@ void print_line_storage( int segment){
     std::cout<<"  |\t" << segment <<"\t|\t    None   \t|\t   Disponível   \t|\tNone\t|\t   None   \t|"<<std::endl;
 }
 void print_line_storage(Hadware::ContentData data, int segment){
-    std::cout<<"  |\t" << segment <<"\t|\t    "<< data.id <<"   \t|\t   Indisponível    \t|\t"<< data.current_time<<"\t|\t" << data.time << "\t|" <<std::endl;
+    std::cout<<"  |\t" << segment <<"\t|\t    "<< data.id <<"   \t|\t   Indisponível    \t|\t"<< data.current_time<<"\t|\t    " << data.time << "    \t|" <<std::endl;
 }
 
 void Storage::generate_report() const {

@@ -11,7 +11,7 @@ void print_line( int core){
     std::cout<<"  |\t" << core <<"\t|\t    None   \t|\t   None   \t|\tDisponível\t|"<<std::endl;
 }
 void print_line(Process process, int core){
-    std::cout<<"  |\t" << core <<"\t|\t    "<< process.get_id() <<"   \t|\t   "<<process.get_max_quantum()<<"   \t|\tIndisponível\t|"<<std::endl;
+    std::cout<<"  |\t" << core <<"\t|\t    "<< process.get_id() <<"   \t|\t   "<<process.get_max_quantum()<<"\t\t|\tIndisponível\t|"<<std::endl;
 }
 
 void Cpu::generate_report() const {

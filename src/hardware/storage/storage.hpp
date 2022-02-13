@@ -12,9 +12,11 @@ class Storage :public Hadware{
     public:
         Storage(){}
         Storage(int blocks_size);
-        void insert_process (Process process) override;
+        void insert_process (std::list<Process>::iterator iterator) override;
         void remove_process (int id)          override;
-        void generate_report()          const override;     
+        void generate_report()          const override; 
+        void remove_ready_process() override;    
+        void add_current_time_storage();
    
     private:
         void print_list() const;

@@ -17,11 +17,11 @@ void Fifo::execute_list_processes(){
     int current_quantum = 0;
 
     do{
+
         if(current_quantum <= 0){
-            // Função que vai checar se o processo atual é cpu-bound e se precisa ser removido da cpu. Caso o processo tenha status "em-execução" ele precisa ser removido
             current_process++;
             if(!this->continuity_test(current_process, current_quantum)){
-                usleep(1000000);
+                usleep(100000);
                 continue;
             }
             
@@ -31,12 +31,15 @@ void Fifo::execute_list_processes(){
 
         if(current_process->get_status() == STATUS_READY)
             this->execute_process(current_process);
+        
+        this->add_time();
+        this->check_remove_memory_storage();
+        this->check_finished_process(current_process);
 
-
-
-
-        usleep(1000000);
+        usleep(100000);
         current_quantum--;
+
+        if(current_quantum <= 0) this->check_remove_cpu(current_process);
     }while(true);
 
 } 

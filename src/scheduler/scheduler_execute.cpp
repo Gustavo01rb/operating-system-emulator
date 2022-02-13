@@ -2,17 +2,12 @@
 
 int Scheduler::radom_number(int max) const{return rand()%max + 1;}
 
-void Scheduler::insert_process_block_list(std::list<Process>::iterator iterator){
-    this->block.push_back(*iterator);
 
-}
-
-void Scheduler::execute_process(std::list<Process>::iterator& iterator){
-
+void Scheduler::execute_process(std::list<Process>::iterator iterator){
 
     if(iterator->get_type() == PROCESS_CPU){
         iterator->set_status_await();
-        this->cpu_ref->insert_process(*iterator);
+        this->cpu_ref->insert_process(iterator);
         return;
     }
 
@@ -20,9 +15,8 @@ void Scheduler::execute_process(std::list<Process>::iterator& iterator){
     iterator->set_penalty_time(penalty_time); 
     iterator->set_status_block();
     
-    if(iterator->get_type() == PROCESS_MEM) this->memory_ref->insert_process(*iterator);
-    else this->storage_ref->insert_process(*iterator);
+    if(iterator->get_type() == PROCESS_MEM) this->memory_ref->insert_process(iterator);
+    else this->storage_ref->insert_process(iterator);
     
-    this->insert_process_block_list(iterator);
 
 }

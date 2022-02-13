@@ -21,31 +21,34 @@ bool Scheduler::report_processes() const{
         || !this->medium_priority_process.empty()
         || !this->low_priority_process.empty()
         || !this->super_low_priority_process.empty()
+        || !this->finalized.empty()
     );
     if(!have_processes){
         std::cout<<" Erro[34] -> Não há processos para serem exibidos, confirme se sua lista de processo está carregada adequadamente no arquivo: " <<PROCESSES_FILE<< " e execute o comando: load para carrega-la." << std::endl;
         return false;
     }
-    
     system("clear");
-    header((std::string) "Lista de Processos" , true);
-    print_list(this->high_priority_process);
-    print_list(this->medium_priority_process);
-    print_list(this->low_priority_process);
-    print_list(this->super_low_priority_process);
-    std::cout<<"   ------------------------------------------------------------------------------------------------------------------------------"<<std::endl;
 
+    bool all_finished = ( 
+        this->high_priority_process.empty()
+        || this->medium_priority_process.empty()
+        || this->low_priority_process.empty()
+        || this->super_low_priority_process.empty()
+    );
 
-    if(!this->block.empty()){
-        std::cout<<"\n"<<std::endl;
-        header((std::string) "Processos Bloqueados" , false);
-        print_list(this->block);
+    if(!all_finished){
+        header((std::string) "Lista de Processos" , true);
+        print_list(this->high_priority_process);
+        print_list(this->medium_priority_process);
+        print_list(this->low_priority_process);
+        print_list(this->super_low_priority_process);
         std::cout<<"   ------------------------------------------------------------------------------------------------------------------------------"<<std::endl;
     }
+    
     if(!this->finalized.empty()){
         std::cout<<"\n"<<std::endl;
         header((std::string) "Processos Finalizados" , false);
-        print_list(this->block);
+        print_list(this->finalized);
         std::cout<<"   ------------------------------------------------------------------------------------------------------------------------------"<<std::endl;
     }
     return true;

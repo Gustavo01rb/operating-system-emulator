@@ -30,7 +30,6 @@ class Scheduler{
         std::list<Process> low_priority_process;
         std::list<Process> super_low_priority_process;
 
-        std::list<Process> block;
         std::list<Process> finalized;
         bool single_list;
 
@@ -42,8 +41,12 @@ class Scheduler{
     
     protected:
         int radom_number(int max) const;
-        void execute_process(std::list<Process>::iterator& iterator);
-        void insert_process_block_list(std::list<Process>::iterator iterator);
+        void execute_process(std::list<Process>::iterator iterator);
+        void update_timestamp();
+        void check_remove_cpu(std::list<Process>::iterator iterator);
+        void check_remove_memory_storage();
+        void check_finished_process(std::list<Process>::iterator& current_iterator);
+        void add_time();
     
 };
 
