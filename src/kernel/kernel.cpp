@@ -12,10 +12,12 @@ Kernel::Kernel(){
     this->cpu    = Cpu     ( hardware_info["cores"]    );
     this->memory = Memory  ( hardware_info["segments"] );
     this->storage = Storage( hardware_info["storage"]);
+    this->quantum_time = (unsigned int)  hardware_info["quantum_time"] * 1000000; 
 }
 
-Cpu*      Kernel::get_cpu_ref()     { return &this->cpu;     }
-Memory*   Kernel::get_memory_ref()  { return &this->memory;  }
-Storage*  Kernel::get_storage_ref() { return &this->storage; }
+Cpu*      Kernel::get_cpu_ref()         { return &this->cpu;        }
+Memory*   Kernel::get_memory_ref()      { return &this->memory;     }
+Storage*  Kernel::get_storage_ref()     { return &this->storage;    }
+unsigned int Kernel::get_quantum_time() { return this->quantum_time;}
 
 void Kernel::report_component(const Hadware& component)const{ component.generate_report();  }

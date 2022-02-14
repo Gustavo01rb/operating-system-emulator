@@ -1,64 +1,6 @@
 #include "mfp.hpp"
 void print_tokens(const std::list<Process> list);
 
-void Mfp::generate_tokens(){
-    int number_of_tokens_generated = (int) this->super_low_priority_process.size() - (int) this->tokens_available.size();
-
-    if(number_of_tokens_generated <= 0) return; // Já possuo todos os tokens que preciso (pelo menos 1 token para cada processo)
-
-    for(int i = 0; i < number_of_tokens_generated; i++)
-        this->tokens_available.push_back(range_tokens_avaliables + i);
-    
-    this->range_tokens_avaliables += number_of_tokens_generated;
-}
-
-void Mfp::distribute_tokens(){
-    if(this->super_low_priority_process.empty()) return;
-    int division = (int) this->tokens_available.size() / (int) this->super_low_priority_process.size();
-    for(int i = 0; i < division; i++)
-    for(std::list<Process>::iterator iterator = this->super_low_priority_process.begin(); iterator != this->super_low_priority_process.end(); iterator++){
-        iterator->add_token( this->tokens_available.back() );
-        this->tokens_available.pop_back();
-    }
-
-}
-
-bool Mfp::contains_token(int token)const{  
-    for(int i : this->tokens_available)
-        if(token == i) return true;
-    return false;  
-}
-
-void Mfp::raffle(std::list<Process>::iterator& iterator){
-    if(this->super_low_priority_process.size() == 1){
-        iterator = this->super_low_priority_process.begin();
-        return;
-    }
-    bool number_valid = false;
-    int luck_number;
-    int attempts = 15;
-    while(attempts > 0){
-
-        do{
-            luck_number = this->radom_number(this->range_tokens_avaliables - 1);
-            if(this->contains_token(luck_number)) continue;
-            number_valid = true;
-        }while(number_valid == false);
-
-        for(iterator = this->super_low_priority_process.begin(); iterator != this->super_low_priority_process.end(); iterator++)
-            if(iterator->contains_token(luck_number)) return;
-        attempts--;
-    }
-    std::cout<<"Erro crítico, ninguém tem o número sorteado: "<< luck_number << std::endl;
-    exit(90);
-}
-
-void Mfp::recover_tokens(std::list<Process>::iterator& iterator){
-    std::vector<int> assit = iterator->get_and_remove_tokens();
-    for(int x : assit)
-        this->tokens_available.push_back(x);
-}
-
 void Mfp::execute_based_on_mfp(){
     if(this->super_low_priority_process.empty()){
         std::cout<<"Erro[44]-> Não há processos a serem executados."<<std::endl;
@@ -88,7 +30,7 @@ void Mfp::execute_based_on_mfp(){
         this->check_remove_memory_storage();
         this->check_finished_process(current_process);
 
-        usleep(100000);
+        usleep(this->kernel_ref->get_quantum_time());
         current_quantum--;
 
         if(current_quantum <= 0 && current_process != this->super_low_priority_process.end()){

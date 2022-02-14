@@ -17,7 +17,9 @@ void Lru::execute_list_processes(){
     std::list<Process>::iterator current_process = this->super_low_priority_process.end();
     int current_quantum = 0;
     int total_cycles = (int) this->super_low_priority_process.size();
+    int initial_size_list_process = (int) this->super_low_priority_process.size();
     sort_list(total_cycles);
+
 
     do{
 
@@ -29,7 +31,7 @@ void Lru::execute_list_processes(){
             total_cycles--;
             current_process++;
             if(!this->continuity_test(current_process, current_quantum, this->super_low_priority_process)){
-                usleep(100000);
+                usleep(this->kernel_ref->get_quantum_time());
                 continue;
             }
             
@@ -44,13 +46,13 @@ void Lru::execute_list_processes(){
         this->check_remove_memory_storage();
         this->check_finished_process(current_process);
 
-        usleep(100000);
+        usleep(this->kernel_ref->get_quantum_time());
         current_quantum--;
 
        if(current_quantum <= 0 && current_process != this->super_low_priority_process.end()){
             this->check_remove_cpu(current_process);
             current_process->set_status_ready();
         }
-    }while(true);
+    }while((int) this->finalized.size() < initial_size_list_process);
 
 } 

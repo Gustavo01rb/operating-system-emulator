@@ -14,6 +14,7 @@ class Kernel{
         Cpu     cpu;
         Memory  memory;
         Storage storage;
+        unsigned int quantum_time;
     public:
         Kernel();
 
@@ -22,6 +23,6 @@ class Kernel{
         Storage* get_storage_ref();
 
         void report_component( const Hadware& component) const;
-
+        unsigned int get_quantum_time();
 
 };

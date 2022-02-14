@@ -23,35 +23,3 @@ int main(){
     shell->start_os();
     return 0;
 }
-
-/*int main(){
-    vector<int> teste;
-    teste.push_back(20);
-    teste.push_back(30);
-    teste.push_back(40);
-    teste.push_back(50);
-
-    cout<<"A função contém o número 80?"<<endl;
-    bool resposta = count(teste.begin(), teste.end(), 80);
-    if(resposta)
-        cout<<"Sim" << endl;
-    else
-        cout<<"Não" << endl;
-
-    vector<int> teste2 = teste;
-    teste.clear();
-    cout<<"\nValores em teste 1: ";
-    for(int x : teste){
-        cout<<"["<<x<<"]";
-    }
-    cout<<"\nValores em teste 2: ";
-    for(int x : teste2){
-        cout<<"["<<x<<"]";
-    }
-    
-
-
-    return 0;
-}*/
-
-
