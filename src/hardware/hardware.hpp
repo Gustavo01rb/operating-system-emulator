@@ -18,7 +18,6 @@ class Hadware{
             int         current_time;      // Tempo que ele está na memoria
             bool        alocated;          // variável que define se está alocado ou não 
             std::string description;       // Tipo do processo 
-            std::list<Process>::iterator iterator;
             
             ContentData(){this->alocated = false;}
             ContentData(int id, int time, int current_time, std::string description):
@@ -29,13 +28,12 @@ class Hadware{
             {
                 this->alocated = false;
             }
-            ContentData(int id, int time, int current_time, bool alocated, std::string description, std::list<Process>::iterator iterator):
+            ContentData(int id, int time, int current_time, bool alocated, std::string description):
                 id(id),
                 time(time),
                 current_time(current_time),
                 alocated(alocated),
-                description(description),
-                iterator(iterator)
+                description(description)
             {}
         };
     protected:
@@ -45,8 +43,7 @@ class Hadware{
                 iterator->get_penalty_time(),
                 0,
                 true,
-                iterator->get_type(),
-                iterator
+                iterator->get_type()
             );
         }
 };

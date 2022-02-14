@@ -40,7 +40,6 @@ void Storage::remove_ready_process(){
         if(!iter->alocated) continue;
         if(iter->current_time < iter->time) continue;
 
-        iter->iterator->set_status_ready();
         *iter = ContentData(); 
         this->allocated_blocks--;
     }

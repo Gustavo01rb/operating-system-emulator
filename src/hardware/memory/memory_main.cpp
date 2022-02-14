@@ -42,7 +42,6 @@ void Memory::remove_ready_process(){
         if(!ram[i].alocated) continue;
         if(ram[i].current_time < ram[i].time) continue;
 
-        ram[i].iterator->set_status_ready();
         ram[i] = ContentData();
         this->allocated_segments--;
     }

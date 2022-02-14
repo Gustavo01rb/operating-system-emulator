@@ -5,10 +5,10 @@ void update_timestamp_in_list(std::list<Process>& list){
         iter->add_timestamp();
 }
 void Scheduler::update_timestamp(){
-    if(!this->high_priority_process.empty()) update_timestamp_in_list(this->high_priority_process);
-    if(!this->medium_priority_process.empty()) update_timestamp_in_list(this->medium_priority_process);
-    if(!this->low_priority_process.empty()) update_timestamp_in_list(this->high_priority_process);
-    if(!this->super_low_priority_process.empty()) update_timestamp_in_list(this->super_low_priority_process);
+    if( !this->high_priority_process.empty()     ) update_timestamp_in_list(this->high_priority_process);
+    if( !this->medium_priority_process.empty()   ) update_timestamp_in_list(this->medium_priority_process);
+    if( !this->low_priority_process.empty()      ) update_timestamp_in_list(this->high_priority_process);
+    if( !this->super_low_priority_process.empty()) update_timestamp_in_list(this->super_low_priority_process);
 }
 
 void Scheduler::add_time(){

@@ -3,7 +3,6 @@
 void Scheduler::check_remove_cpu(std::list<Process>::iterator iterator){
     if(iterator->get_status() != STATUS_AWAIT ) return;
     this->cpu_ref->remove_process(iterator->get_id());
-    iterator->set_status_ready();
 }
 
 void Scheduler::check_remove_memory_storage(){
