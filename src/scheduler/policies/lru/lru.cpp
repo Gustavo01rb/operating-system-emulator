@@ -1,16 +1,32 @@
-#include "fifo.hpp"
+#include "lru.hpp"
 
-void Fifo::execute_list_processes(){
+void Lru::sort_list(int& total_cycles){
+    if(this->super_low_priority_process.empty()) return;
+
+    this->super_low_priority_process.sort([](Process p1, Process p2) {
+        return p1.get_cycles() < p2.get_cycles();
+    });
+    total_cycles = (int) this->super_low_priority_process.size();
+}
+
+void Lru::execute_list_processes(){
     if(this->super_low_priority_process.empty()){
         std::cout<<"Erro[44] -> Não há processos para serem executados, tente o comando 'load' para carregar processos." << std::endl;
         return;
     }
     std::list<Process>::iterator current_process = this->super_low_priority_process.end();
     int current_quantum = 0;
+    int total_cycles = (int) this->super_low_priority_process.size();
+    sort_list(total_cycles);
 
     do{
 
         if(current_quantum <= 0){
+            if(total_cycles == 0){
+                current_process = this->super_low_priority_process.end();
+                sort_list(total_cycles);
+            }
+            total_cycles--;
             current_process++;
             if(!this->continuity_test(current_process, current_quantum)){
                 usleep(100000);

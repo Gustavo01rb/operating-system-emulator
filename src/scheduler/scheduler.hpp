@@ -40,6 +40,7 @@ class Scheduler{
         bool report_processes() const;
     
     protected:
+        bool continuity_test(std::list<Process>::iterator& iterator, int& current_quantum) const;
         int radom_number(int max) const;
         void execute_process(std::list<Process>::iterator iterator);
         void update_timestamp();

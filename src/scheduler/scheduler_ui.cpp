@@ -31,9 +31,9 @@ bool Scheduler::report_processes() const{
 
     bool all_finished = ( 
         this->high_priority_process.empty()
-        || this->medium_priority_process.empty()
-        || this->low_priority_process.empty()
-        || this->super_low_priority_process.empty()
+        && this->medium_priority_process.empty()
+        && this->low_priority_process.empty()
+        && this->super_low_priority_process.empty()
     );
 
     if(!all_finished){

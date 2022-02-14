@@ -7,6 +7,13 @@ Scheduler::Scheduler(Kernel* kernel_ref, bool single_list):kernel_ref(kernel_ref
 
 }
 
+bool Scheduler::continuity_test(std::list<Process>::iterator& iterator, int& current_quantum) const{
+    if( this->super_low_priority_process.empty() ){ current_quantum--; return false;}
+    if(iterator != this->super_low_priority_process.end()) return true;
+    iterator++;
+    return true;
+}
+
 void add_process_in_list(std::list<Process>& list, nlohmann::json json_file, int position){
     list.push_back(
         Process(

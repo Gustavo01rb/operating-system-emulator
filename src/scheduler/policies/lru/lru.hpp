@@ -3,8 +3,10 @@
 #include "../../scheduler.hpp"
 #include "../../../kernel/kernel.hpp"
 
-class Fifo : public Scheduler{
+class Lru : public Scheduler{
     public:
-        Fifo(Kernel* kernel_ref):Scheduler(kernel_ref, true){}
+        Lru(Kernel* kernel_ref):Scheduler(kernel_ref, true){}
         void execute_list_processes() override;
+    private:
+        void sort_list(int& total_cycles);
 };
