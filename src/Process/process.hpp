@@ -17,7 +17,6 @@
 
 class Process{
     public:
-        std::vector<int> tokens;
         int assist;
 
     private:
@@ -29,7 +28,6 @@ class Process{
         std::string  status;
         std::string  type;
         int          penalty_time;
-
 
     public:
         Process(){}
@@ -65,5 +63,14 @@ class Process{
     public:
         void add_timestamp();
         void sub_cycles(int quantum_drawn);
+    
+    //token management
+    private:
+        std::vector<int> tokens;
+    public:
+        void add_token(int token);
+        bool contains_token(int token);
+        std::vector<int> get_and_remove_tokens();
+
 
 };

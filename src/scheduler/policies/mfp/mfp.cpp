@@ -52,7 +52,9 @@ void Mfp::execute_based_on_fifo(std::list<Process>& current_list, std::list<Proc
 void Mfp::execute_list_processes(){
     execute_based_on_fifo(this->high_priority_process, this->medium_priority_process);    
     execute_based_on_fifo(this->medium_priority_process, this->low_priority_process);    
-    execute_based_on_fifo(this->low_priority_process, this->super_low_priority_process);    
+    execute_based_on_fifo(this->low_priority_process, this->super_low_priority_process); 
+    std::cout<<"Cabou" << std::endl;
+    execute_based_on_mfp();   
 
 
 
