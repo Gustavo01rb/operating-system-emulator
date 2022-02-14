@@ -48,6 +48,8 @@ class Process{
         void set_status_await();
         void set_status_block();
         void set_status_finished();
+        void sub_priority();
+
 
 
     public:

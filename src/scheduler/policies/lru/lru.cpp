@@ -28,7 +28,7 @@ void Lru::execute_list_processes(){
             }
             total_cycles--;
             current_process++;
-            if(!this->continuity_test(current_process, current_quantum)){
+            if(!this->continuity_test(current_process, current_quantum, this->super_low_priority_process)){
                 usleep(100000);
                 continue;
             }

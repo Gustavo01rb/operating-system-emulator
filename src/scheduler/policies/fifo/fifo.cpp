@@ -12,7 +12,7 @@ void Fifo::execute_list_processes(){
 
         if(current_quantum <= 0){
             current_process++;
-            if(!this->continuity_test(current_process, current_quantum)){
+            if(!this->continuity_test(current_process, current_quantum, this->super_low_priority_process)){
                 usleep(100000);
                 continue;
             }

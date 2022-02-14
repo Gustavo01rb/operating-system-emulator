@@ -7,6 +7,7 @@
 #include "scheduler/scheduler.hpp"
 #include "scheduler/policies/fifo/fifo.hpp"
 #include "scheduler/policies/lru/lru.hpp"
+#include "scheduler/policies/mfp/mfp.hpp"
 
 
 #include <list>
@@ -16,7 +17,7 @@ using namespace std;
 int main(){
     system("clear");
     Kernel* kernel = new Kernel();
-    Scheduler* scheduler = new Lru(kernel); 
+    Scheduler* scheduler = new Mfp(kernel); 
     Shell*  shell  = new Shell(kernel, scheduler);
 
     shell->start_os();
