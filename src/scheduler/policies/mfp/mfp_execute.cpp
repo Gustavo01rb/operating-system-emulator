@@ -14,6 +14,8 @@ void Mfp::generate_tokens(){
 
 void Mfp::distribute_tokens(){
     if(this->super_low_priority_process.empty()) return;
+    int division = (int) this->tokens_available.size() / (int) this->super_low_priority_process.size();
+    for(int i = 0; i < division; i++)
     for(std::list<Process>::iterator iterator = this->super_low_priority_process.begin(); iterator != this->super_low_priority_process.end(); iterator++){
         iterator->add_token( this->tokens_available.back() );
         this->tokens_available.pop_back();
@@ -21,22 +23,32 @@ void Mfp::distribute_tokens(){
 
 }
 
-bool Mfp::contains_token(int token)const{ return std::count(this->tokens_available.begin(), this->tokens_available.end(), token); }
+bool Mfp::contains_token(int token)const{  
+    for(int i : this->tokens_available)
+        if(token == i) return true;
+    return false;  
+}
 
 void Mfp::raffle(std::list<Process>::iterator& iterator){
+    if(this->super_low_priority_process.size() == 1){
+        iterator = this->super_low_priority_process.begin();
+        return;
+    }
     bool number_valid = false;
     int luck_number;
-    do{
-        luck_number = this->radom_number(this->range_tokens_avaliables - 1);
-        if(this->contains_token(luck_number)) continue;
-        number_valid = true;
-    }while(number_valid == false);
+    int attempts = 15;
+    while(attempts > 0){
 
-    std::cout<<"\nNúemro sorteado: " << luck_number << std::endl;
+        do{
+            luck_number = this->radom_number(this->range_tokens_avaliables - 1);
+            if(this->contains_token(luck_number)) continue;
+            number_valid = true;
+        }while(number_valid == false);
 
-    for(iterator = this->super_low_priority_process.begin(); iterator != this->super_low_priority_process.end(); iterator++)
-        if(iterator->contains_token(luck_number)) return;
-    
+        for(iterator = this->super_low_priority_process.begin(); iterator != this->super_low_priority_process.end(); iterator++)
+            if(iterator->contains_token(luck_number)) return;
+        attempts--;
+    }
     std::cout<<"Erro crítico, ninguém tem o número sorteado: "<< luck_number << std::endl;
     exit(90);
 }
@@ -47,9 +59,6 @@ void Mfp::recover_tokens(std::list<Process>::iterator& iterator){
         this->tokens_available.push_back(x);
 }
 
-
-
-
 void Mfp::execute_based_on_mfp(){
     if(this->super_low_priority_process.empty()){
         std::cout<<"Erro[44]-> Não há processos a serem executados."<<std::endl;
@@ -58,25 +67,37 @@ void Mfp::execute_based_on_mfp(){
 
     int current_quantum = 0;
     std::list<Process>::iterator current_process;
+    int initial_size_list_process = (int) this->super_low_priority_process.size();
 
     do{
-        if(current_quantum <= 3){
+        if(current_quantum <= 0){
             generate_tokens();
             distribute_tokens();
+            /*print_tokens(this->super_low_priority_process);
+            std::cout<<"\n\nTokens avaliables: " ;
+            for(int x : this->tokens_available) std::cout<<"[" << x << "]  " ;*/
             raffle(current_process);
             recover_tokens(current_process);
-            print_tokens(this->super_low_priority_process);
+            current_quantum = this->radom_number(current_process->get_max_quantum());
+            current_process->sub_cycles(current_quantum);
+        }
+         if(current_process->get_status() == STATUS_READY)
+            this->execute_process(current_process);
+        
+        this->add_time();
+        this->check_remove_memory_storage();
+        this->check_finished_process(current_process);
 
-            std::cout<<"Processo sortado: " << current_process->get_id() << std::endl;
-            current_quantum++;
-            std::cout<<"\n\nTokens disponíveis: ";
-            for(int x : this->tokens_available) std::cout<<"[" << x << "]  " ;
-     std::cout<<std::endl;
+        usleep(100000);
+        current_quantum--;
 
+        if(current_quantum <= 0 && current_process != this->super_low_priority_process.end()){
+            this->check_remove_cpu(current_process);
+            current_process->set_status_ready();
         }
 
 
-    }while(true);
+    }while((int) this->finalized.size() < initial_size_list_process);
 
 }
 
